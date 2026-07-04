@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reward Hub - User Panel 2 (Custom & Social Tasks)</title>
+    
+    <!-- OLD ADS -->
+    <script type="text/javascript" src="https://pl28191149.effectivecpmnetwork.com/69/6f/c9/696fc9362d213ad97a6e549507572c3d.js"></script>
+    
+    <!-- NEW ADS: VINTAGE BANNER -->
+    <script>(function(s){s.dataset.zone='10633533',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+    <style>
+        :root { --bg-light: #f8f9fa; --drawer-bg: #100f24; --primary: #5c35f2; --text-dark: #1e1e1e; --text-muted: #8e8e93; --grad-red: linear-gradient(135deg, #ff4b6b, #ff7b94); --grad-teal: linear-gradient(135deg, #12c2e9, #c471ed); --grad-purple: linear-gradient(135deg, #8e2de2, #4a00e0); --grad-orange: linear-gradient(135deg, #f7971e, #ffd200); --grad-blue: linear-gradient(135deg, #2193b0, #6dd5ed); --grad-green: linear-gradient(135deg, #11998e, #38ef7d); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 40; }
+        .menu-btn { font-size: 26px; cursor: pointer; color: var(--text-dark); }
+        .header-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .back-btn { font-size: 24px; cursor: pointer; display: none; margin-right: 15px; }
+        .top-ad-container { width: 100%; display: flex; justify-content: center; background: #fff; padding: 5px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 99; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .drawer { position: fixed; top: 0; left: -320px; width: 300px; height: 100%; background: var(--drawer-bg); z-index: 100; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; overflow-y: auto; color: white; }
+        .drawer.open { transform: translateX(320px); }
+        .drawer-profile { padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .drawer-close { position: absolute; top: 15px; left: 15px; font-size: 24px; cursor: pointer; }
+        .profile-img { width: 70px; height: 70px; background: #fff; border-radius: 50%; margin: 0 auto 10px; border: 2px solid #ffd200; overflow: hidden; }
+        .drawer-wallet { background: linear-gradient(135deg, #3a1c71, #d76d77); margin-top: 15px; padding: 15px; border-radius: 12px; text-align: left; }
+        .nav-label { font-size: 12px; color: var(--text-muted); padding: 15px 20px 5px; text-transform: uppercase; font-weight: bold; }
+        .nav-links { list-style: none; padding: 0 10px; }
+        .nav-links li { padding: 12px 15px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; transition: 0.2s; font-size: 15px; font-weight: 500; }
+        .nav-links li:hover { background: rgba(255,255,255,0.1); }
+        .feat-icon { width: 35px; height: 35px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px; color: white; margin-right: 15px;}
+        main { padding: 15px; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; min-height: 80vh; }
+        .section { display: none; animation: fadeIn 0.3s; flex-grow: 1; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .balance-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .bal-card { padding: 15px; border-radius: 16px; position: relative; }
+        .bal-card.fiat { background: #e8f5e9; color: #2e7d32; }
+        .bal-card.coin { background: #fffde7; color: #f57f17; }
+        .bal-card h4 { font-size: 12px; margin-bottom: 5px; opacity: 0.8; }
+        .bal-card h2 { font-size: 20px; font-weight: 700; }
+        .section-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .section-title::before { content: ""; width: 4px; height: 16px; background: var(--primary); border-radius: 2px; }
+        .earn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .earn-card { background: white; border-radius: 16px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center; border: 1px solid #eee; display: flex; flex-direction: column; align-items: center; }
+        .earn-card .feat-icon { width: 50px; height: 50px; font-size: 24px; margin: 0 auto 10px; }
+        .action-btn { border: none; padding: 8px 15px; border-radius: 20px; color: white; font-size: 12px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 30; }
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; cursor: pointer; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item .icon { font-size: 20px; margin-bottom: 3px; display: block; }
+        .task-view { background: white; border-radius: 16px; padding: 25px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .task-limit { display: inline-block; background: #fef08a; color: #b45309; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; }
+        .big-action-btn { background: var(--primary); color: white; border: none; padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; width: 100%; margin-top: 15px; cursor: pointer; transition: 0.2s; }
+        .big-action-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .form-group { text-align: left; margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; }
+        .form-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background: #f9f9f9; font-size: 15px; outline: none; }
+        
+        .list-item { background: #f9f9f9; border: 1px solid #eee; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; text-align: left; justify-content: space-between;}
+        .list-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; margin-right: 15px; }
+        .status-badge { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: bold; float: right; }
+        .st-pending { background: #fef08a; color: #b45309; }
+        .st-approved, .st-success { background: #bbf7d0; color: #166534; }
+        .st-rejected { background: #fecaca; color: #991b1b; }
+
+        .slot-machine { font-size: 45px; background: #f1f5f9; padding: 20px; border-radius: 12px; letter-spacing: 15px; margin: 20px 0; border: 2px solid #cbd5e1; }
+        .scratch-card { width: 220px; height: 110px; background: var(--grad-purple); margin: 20px auto; display: flex; justify-content: center; align-items: center; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 20px; color: #fff; }
+        .scratch-card.scratched { background: #fef08a; color: #000; }
+        .captcha-box { font-size: 28px; background: #1e293b; color: white; padding: 15px; letter-spacing: 8px; margin: 15px 0; text-decoration: line-through; border-radius: 8px; }
+
+        .adgate-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .adgate-overlay.active { opacity: 1; visibility: visible; }
+        .adgate-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #111; color: white; border-bottom: 1px solid #333; }
+        .adgate-iframe { flex-grow: 1; width: 100%; border: none; background: #fff; }
+        .adgate-close-btn { background: #ff4b6b; color: white; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #333; color: white; padding: 12px 25px; border-radius: 30px; font-size: 14px; font-weight: bold; z-index: 10000; transition: 0.4s; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- SECURE ADGATE IFRAME FIX -->
+    <div class="adgate-overlay" id="adgate-modal">
+        <div class="adgate-header">
+            <span style="color:#ffd200; font-weight:bold" id="adgate-timer">Loading Sponsor...</span>
+            <button class="adgate-close-btn" id="adgate-close" onclick="closeAdgate()">Continue ➔</button>
+        </div>
+        <iframe class="adgate-iframe" id="adgate-iframe" allow="autoplay; fullscreen"></iframe>
+    </div>
+    
+    <div class="top-ad-container"><script> atOptions = { 'key' : 'b4457942a63e691b166fad379a531c3d', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} }; </script><script src="https://www.highperformanceformat.com/b4457942a63e691b166fad379a531c3d/invoke.js"></script></div>
+
+    <header><div class="header-title"><span class="back-btn" id="btn-back" onclick="navigate('dashboard')">←</span><span class="menu-btn" id="btn-menu" onclick="toggleDrawer()">☰</span><span id="header-text">Home</span></div></header>
+
+    <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <div class="drawer-profile">
+            <div class="drawer-close" onclick="toggleDrawer()">×</div>
+            <div class="profile-img"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" width="100%"></div>
+            <h3>User ID: <span id="uid-display" style="font-size:12px;">Loading</span></h3>
+            <div class="drawer-wallet"><p style="font-size:12px; opacity:0.8">Your Balance</p><h3 id="drawer-fiat">$0.00</h3><p style="font-size:12px">🪙 <span id="drawer-coins">0</span> Coins</p></div>
+        </div>
+        <div class="nav-label">New Tasks</div>
+        <ul class="nav-links">
+            <li onclick="openTask('custom-tasks', 'Custom Tasks')"><div style="display:flex;"><div class="feat-icon" style="background: var(--primary);">📝</div> Custom Tasks</div></li>
+            <li onclick="openTask('social-tasks', 'Social Media Tasks')"><div style="display:flex;"><div class="feat-icon" style="background: #e1306c;">❤️</div> Social Media Tasks</div></li>
+            <li onclick="openTask('task-reviews', 'My Reviews')"><div style="display:flex;"><div class="feat-icon" style="background: #2193b0;">🔍</div> Review Section</div></li>
+        </ul>
+        <div class="nav-label">General Tasks</div>
+        <ul class="nav-links">
+            <li onclick="openTask('watch-video', 'Watch Video & Earn')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-red);">📺</div> Watch Video</div></li>
+            <li onclick="openTask('watch-ads', 'Watch Ads')"><div style="display:flex;"><div class="feat-icon" style="background: linear-gradient(135deg, #ff9a44, #fc6076);">📢</div> Watch Ads</div></li>
+            <li onclick="openTask('spin-earn', 'Spin Earn')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-teal);">🎡</div> Spin Earn</div></li>
+            <li onclick="openTask('scratch-win', 'Scratch Win')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-purple);">🎫</div> Scratch Win</div></li>
+            <li onclick="openTask('slot-earn', 'Slot Earn')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-orange);">🎰</div> Slot Earn</div></li>
+            <li onclick="openTask('captcha-earn', 'Solve Captcha')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-blue);">⌨️</div> Solve Captcha</div></li>
+            <li onclick="openTask('withdrawal', 'Withdrawal')"><div style="display:flex;"><div class="feat-icon" style="background: var(--grad-green);">💳</div> Withdrawal Request</div></li>
+        </ul>
+        <div class="nav-label">Social Links (Admin)</div><ul class="nav-links" id="social-links-drawer"></ul>
+    </div>
+
+    <main>
+        <section id="dashboard" class="section active">
+            <div class="balance-cards">
+                <div class="bal-card fiat"><h4>Total Balance</h4><h2 id="home-fiat">$0.00</h2></div>
+                <div class="bal-card coin"><h4>Total Coins</h4><h2 id="home-coins">0</h2></div>
+            </div>
+            <div class="section-title">All Options</div>
+            <div class="earn-grid">
+                <div class="earn-card"><div class="feat-icon" style="background: var(--primary);">📝</div><h3>Custom Tasks</h3><button class="action-btn" style="background:var(--primary)" onclick="openTask('custom-tasks', 'Custom Tasks')">Explore</button></div>
+                <div class="earn-card"><div class="feat-icon" style="background: #e1306c;">❤️</div><h3>Social Tasks</h3><button class="action-btn" style="background:#e1306c" onclick="openTask('social-tasks', 'Social Tasks')">Start</button></div>
+                <div class="earn-card"><div class="feat-icon" style="background: var(--grad-red);">📺</div><h3>Watch Video</h3><button class="action-btn" style="background:#ff4b6b" onclick="openTask('watch-video', 'Watch Video')">Play</button></div>
+                <div class="earn-card"><div class="feat-icon" style="background: linear-gradient(135deg, #ff9a44, #fc6076); display:flex; align-items:center; justify-content:center;">📢</div><h3>Watch Ads</h3><button class="action-btn" style="background:#ff9a44" onclick="openTask('watch-ads', 'Watch Ads & Earn')">Watch Now</button></div>
+            </div>
+        </section>
+
+        <!-- CUSTOM TASKS (1 BY 1 REMOVAL VIA REVIEW - FIXED RESTORATION) -->
+        <section id="custom-tasks" class="section">
+            <div class="task-view"><h2>Admin Custom Tasks</h2><p style="font-size:12px; margin-bottom:15px; color:gray;">Send proofs to earn. Sent tasks are permanently removed globally.</p><div id="custom-tasks-list"><p>Loading tasks...</p></div></div>
+        </section>
+        
+        <section id="custom-task-action" class="section">
+            <div class="task-view" id="task-locked">
+                <h2 id="ct-title">Task Name</h2><p id="ct-desc" style="font-size:13px; color:gray; margin:10px 0;"></p>
+                <div style="background:#fffde7; color:#f57f17; padding:10px; border-radius:8px; margin-bottom:15px;">Reward: <strong id="ct-reward">0</strong> 🪙</div>
+                <button class="big-action-btn" onclick="unlockCustomTask()">Unlock Task (Adgate)</button>
+            </div>
+            <div class="task-view" id="task-unlocked" style="display:none;">
+                <h2>Task Unlocked!</h2><a id="ct-link" href="#" target="_blank" class="big-action-btn" style="background:#12c2e9; display:block; text-decoration:none; margin-bottom:20px;">Go To Task Link</a>
+                <h3 style="text-align:left; margin-bottom:10px;">Submit Proof</h3>
+                <div class="form-group"><input type="email" id="ct-email" class="form-input" placeholder="Your Email ID" required></div>
+                <div class="form-group"><input type="text" id="ct-username" class="form-input" placeholder="Your Username used in task" required></div>
+                <div class="form-group"><input type="text" id="ct-screenshot" class="form-input" placeholder="Screenshot Link (imgur url)" required></div>
+                <button class="big-action-btn" onclick="submitCustomTaskProof()">Send to Review (Adgate)</button>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA TASKS (DOUBLE ADGATE FLOW) -->
+        <section id="social-tasks" class="section">
+            <div class="task-view">
+                <h2>Social Media Tasks</h2>
+                <p style="font-size:12px; margin-bottom:15px; color:gray;">Follow, subscribe & earn instantly!</p>
+                <div id="social-tasks-list"><p>Loading...</p></div>
+            </div>
+        </section>
+
+        <!-- DYNAMIC WATCH ADS & VIDEO (PERFECT SYNC) -->
+        <section id="watch-ads" class="section"><div class="task-view"><h2>Watch Ads & Earn</h2><p style="font-size:12px; margin-bottom:15px;">Completed ads are removed globally.</p><div id="watch-ads-list"><p>Loading...</p></div></div></section>
+        <section id="watch-video" class="section"><div class="task-view"><h2>Watch Video Tasks</h2><p style="font-size:12px; margin-bottom:15px;">Videos remove after claiming reward.</p><div id="watch-video-list"><p>Loading...</p></div></div>
+            <div id="video-player-container" class="task-view" style="display:none;"><h3 id="vp-title">Playing Video...</h3><div style="height:150px; background:#000; color:#fff; display:flex; justify-content:center; align-items:center; margin-top:15px; border-radius:10px;">🎥 <span id="vid-timer">15</span>s</div><button class="big-action-btn" disabled id="btn-vid-claim">Wait to claim...</button></div>
+        </section>
+
+        <section id="task-reviews" class="section"><div class="task-view"><h2>My Sent Reviews</h2><div id="reviews-list" style="margin-top:20px;"></div></div></section>
+
+        <!-- PRESERVED OLD TASKS -->
+        <section id="spin-earn" class="section"><div class="task-view"><div class="task-limit">Daily: <span id="lim-spin">50</span></div><h2>Spin Wheel</h2><div style="font-size:70px; margin:20px 0;" id="wheel-icon">🎡</div><button class="big-action-btn" id="btn-spin" onclick="playSpin()">Spin Now</button></div></section>
+        <section id="slot-earn" class="section"><div class="task-view"><div class="task-limit">Daily: <span id="lim-slot">50</span></div><h2>Lucky Slots</h2><div class="slot-machine" id="slot-display">❓❓❓</div><button class="big-action-btn" id="btn-slot" onclick="playSlot()">Pull (2 🪙)</button></div></section>
+        <section id="scratch-win" class="section"><div class="task-view"><div class="task-limit">Daily: <span id="lim-scratch">50</span></div><h2>Scratch Card</h2><div class="scratch-card" id="scratch-area" onclick="playScratch()">SCRATCH ME</div></div></section>
+        <section id="captcha-earn" class="section"><div class="task-view"><div class="task-limit">Daily: <span id="lim-captcha">50</span></div><h2>Captcha</h2><div class="captcha-box" id="captcha-text">Loading...</div><input type="text" class="form-input" id="captcha-input"><button class="big-action-btn" onclick="playCaptcha()">Submit</button></div></section>
+
+        <!-- WITHDRAWAL (MATCHES PANEL 1) -->
+        <section id="withdrawal" class="section">
+            <div class="task-view">
+                <h2>Request Payout</h2>
+                <p style="font-size:12px; color:#ff4b6b; font-weight:bold; margin-bottom:20px;">Min Withdrawal: <span id="admin-min-txt">5000</span> Coins</p>
+                <form id="withdraw-form" onsubmit="processWithdraw(event)">
+                    <div class="form-group"><label>Method</label><select class="form-input" id="w-method" required><option value="PayPal">PayPal</option><option value="UPI">UPI</option></select></div>
+                    <div class="form-group"><label>Details</label><input type="text" id="w-details" class="form-input" placeholder="Email or UPI ID" required></div>
+                    <div class="form-group"><label>Coins</label><input type="number" id="w-amt" class="form-input" required></div>
+                    <button type="submit" class="big-action-btn" style="background:var(--grad-green);">Send Request</button>
+                </form>
+            </div>
+            <div class="task-view" style="margin-top:15px; padding:15px;"><h3 style="margin-bottom:10px;">Withdrawal History</h3><div id="withdrawal-history-list"></div></div>
+        </section>
+
+        <div id="global-ad-footer" style="margin-top: 20px; text-align: center; display:none;">
+            <a href="https://www.effectivecpmnetwork.com/ggbww70z?key=928a34111771129f0b7316670bf21a9d" target="_blank" style="background: #ff4b6b; color: white; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight:bold; display:inline-block; margin-bottom:15px;">⭐ Claim Bonus Sponsor Link</a>
+            <div><script async="async" data-cfasync="false" src="https://pl28191148.effectivecpmnetwork.com/6b4bf9ba798b54640fc50410686f93d7/invoke.js"></script><div id="container-6b4bf9ba798b54640fc50410686f93d7"></div></div>
+        </div>
+    </main>
+
+    <div class="bottom-nav"><div class="nav-item active" onclick="navigate('dashboard')"><span class="icon">🏠</span> Home</div><div class="nav-item" onclick="openTask('withdrawal', 'Withdrawal')"><span class="icon">💰</span> Earnings</div><div class="nav-item" onclick="toggleDrawer()"><span class="icon">👤</span> Profile</div></div>
+    <div id="toast" class="toast">Success!</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue, push, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const app = initializeApp({ apiKey: "AIzaSyArDD2xHOncY3vLg3bquG31n9cVX81IWSA", authDomain: "prime-faucet.firebaseapp.com", databaseURL: "https://prime-faucet-default-rtdb.firebaseio.com", projectId: "prime-faucet", storageBucket: "prime-faucet.firebasestorage.app", messagingSenderId: "127466716847", appId: "1:127466716847:web:13963d545f547989d89e5a" });
+        const db = getDatabase(app);
+
+        // STABLE LIFETIME DEVICE UID
+        let deviceUID = localStorage.getItem('deviceUID');
+        if(!deviceUID) { deviceUID = 'user_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('deviceUID', deviceUID); }
+        document.getElementById('uid-display').innerText = deviceUID;
+
+        // IN-APP INTERSTITIAL
+        try { if(typeof show_10996204 !== 'undefined') { show_10996204({ type: 'inApp', inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false } }); } } catch(e){}
+
+        const COIN_RATE = 0.00001; 
+        let adminMinWithdraw = 5000;
+        let globalDirectLink = "https://www.effectivecpmnetwork.com/ggbww70z?key=928a34111771129f0b7316670bf21a9d";
+        
+        let userData = { coins: 0, completedAds: {}, completedVids: {}, completedSocials: {}, reviews: {}, limits: { spin: 50, slot: 50, scratch: 50, captcha: 50 } };
+        let adminData = { ads: {}, vids: {}, customs: {}, socials: {} };
+
+        // LOCAL HARD-LOCK FOR CUSTOM TASKS TO PREVENT RESTORING
+        window.localCompletedCustoms = {};
+
+        // Real-Time Direct Link Sync
+        onValue(ref(db, 'adminSettings/adScripts/directLink'), (snap) => { if(snap.exists() && snap.val() !== "") globalDirectLink = snap.val(); });
+
+        // 1. BALANCE SYNC (100% Never Decreasing - Fix)
+        const balanceRef = ref(db, `users/${deviceUID}/coins`);
+        onValue(balanceRef, (snapshot) => {
+            if(snapshot.exists()) { userData.coins = Number(snapshot.val()); updateUIBalance(); }
+            else { set(balanceRef, 0); userData.coins = 0; updateUIBalance(); }
+        });
+
+        // 2. DAILY TASK LIMITS LOGIC (Fixed Countdown)
+        const limitsRef = ref(db, `users/${deviceUID}/taskLimits`);
+        let today = new Date().toDateString();
+        onValue(limitsRef, (snap) => {
+            if(snap.exists()) {
+                let data = snap.val();
+                if(data.date !== today) {
+                    userData.limits = { spin: 50, slot: 50, scratch: 50, captcha: 50, date: today };
+                    set(limitsRef, userData.limits);
+                } else { userData.limits = data; }
+            } else {
+                userData.limits = { spin: 50, slot: 50, scratch: 50, captcha: 50, date: today };
+                set(limitsRef, userData.limits);
+            }
+            updateLimitsUI();
+        });
+        function updateLimitsUI() {
+            if(document.getElementById('lim-spin')) document.getElementById('lim-spin').innerText = userData.limits.spin;
+            if(document.getElementById('lim-slot')) document.getElementById('lim-slot').innerText = userData.limits.slot;
+            if(document.getElementById('lim-scratch')) document.getElementById('lim-scratch').innerText = userData.limits.scratch;
+            if(document.getElementById('lim-captcha')) document.getElementById('lim-captcha').innerText = userData.limits.captcha;
+        }
+
+        // ADMIN MINIMUM WITHDRAWAL
+        onValue(ref(db, 'adminSettings/payment/minWithdraw'), (snap) => {
+            if(snap.exists()) { adminMinWithdraw = parseInt(snap.val()); document.getElementById('admin-min-txt').innerText = adminMinWithdraw; document.getElementById('w-amt').min = adminMinWithdraw; }
+        });
+
+        // PERFECT SYNC: ADMIN DATA LISTENERS
+        onValue(ref(db, `adminSettings/watchAds`), (s) => { adminData.ads = s.exists() ? s.val() : {}; renderWatchAds(); });
+        onValue(ref(db, `adminSettings/videos`), (s) => { adminData.vids = s.exists() ? s.val() : {}; renderWatchVideos(); });
+        onValue(ref(db, `adminSettings/customTasks`), (s) => { adminData.customs = s.exists() ? s.val() : {}; renderCustomTasks(); });
+        onValue(ref(db, `adminSettings/socialMediaTasks`), (s) => { adminData.socials = s.exists() ? s.val() : {}; renderSocialTasks(); });
+
+        // PERFECT SYNC: USER COMPLETION LISTENERS (Triggers Re-Render to hide tasks instantly)
+        onValue(ref(db, `users/${deviceUID}/completedAds`), (s) => { userData.completedAds = s.exists() ? s.val() : {}; renderWatchAds(); });
+        onValue(ref(db, `users/${deviceUID}/completedVids`), (s) => { userData.completedVids = s.exists() ? s.val() : {}; renderWatchVideos(); });
+        onValue(ref(db, `users/${deviceUID}/completedSocials`), (s) => { userData.completedSocials = s.exists() ? s.val() : {}; renderSocialTasks(); });
+        onValue(ref(db, `users/${deviceUID}/reviews`), (s) => { 
+            userData.reviews = {};
+            let list = document.getElementById('reviews-list'); list.innerHTML = "";
+            if(!s.exists()) { list.innerHTML = "<p style='font-size:12px;color:gray;'>No reviews sent.</p>"; }
+            else {
+                s.forEach(child => {
+                    let r = child.val();
+                    userData.reviews[r.taskId] = true; 
+                    let statClass = r.status === 'Pending' ? 'st-pending' : (r.status === 'Approved' ? 'st-success' : 'st-rejected');
+                    list.innerHTML += `<div class="list-item"><div style="flex-grow:1;"><h4 style="margin-bottom:3px;">${r.taskTitle}</h4><p style="font-size:11px; color:gray;">Reward: ${r.reward} 🪙</p></div><span class="status-badge ${statClass}">${r.status}</span></div>`;
+                });
+            }
+            renderCustomTasks(); // Hide submitted custom tasks instantly
+        });
+
+        // RENDER FUNCTIONS (Handles the 1-by-1 deletion flawlessly)
+        function renderWatchAds() {
+            let list = document.getElementById('watch-ads-list'); list.innerHTML = ""; let count = 0;
+            for(let key in adminData.ads) {
+                if(!userData.completedAds[key]) {
+                    count++; let ad = adminData.ads[key];
+                    list.innerHTML += `<div class="list-item"><div><h4 style="margin-bottom:3px">${ad.title}</h4><p style="font-size:11px; color:var(--primary)">Reward: ${ad.reward} 🪙</p></div><button class="big-action-btn" style="width:auto; margin:0; padding:8px 15px;" onclick="doWatchAd('${key}', ${ad.reward})">Watch</button></div>`;
+                }
+            }
+            if(count === 0) list.innerHTML = "<p>All caught up! Check back later.</p>";
+        }
+
+        function renderWatchVideos() {
+            let list = document.getElementById('watch-video-list'); list.innerHTML = ""; let count = 0;
+            for(let key in adminData.vids) {
+                if(!userData.completedVids[key]) {
+                    count++; let v = adminData.vids[key];
+                    list.innerHTML += `<div class="list-item"><div><h4 style="margin-bottom:3px">${v.title}</h4><p style="font-size:11px; color:var(--primary)">Reward: ${v.reward} 🪙</p></div><button class="big-action-btn" style="width:auto; margin:0; padding:8px 15px;" onclick="doWatchVideo('${key}', ${v.reward}, '${v.title}')">Play</button></div>`;
+                }
+            }
+            if(count === 0) list.innerHTML = "<p>All videos watched!</p>";
+        }
+
+        function renderCustomTasks() {
+            let list = document.getElementById('custom-tasks-list'); list.innerHTML = ""; let count = 0;
+            for(let key in adminData.customs) {
+                // FIXED: Checks DB reviews OR the local hard-lock to prevent restoring glitch
+                if(!userData.reviews[key] && !window.localCompletedCustoms[key]) {
+                    count++; let t = adminData.customs[key];
+                    let taskStr = encodeURIComponent(JSON.stringify({...t, id: key}));
+                    list.innerHTML += `<div class="list-item" style="cursor:pointer;" onclick="window.viewCustomTask('${taskStr}')"><div style="display:flex;"><img src="${t.thumbnail}"><div><h4 style="margin-bottom:3px;">${t.title}</h4><p style="font-size:11px; color:var(--primary); font-weight:bold;">Reward: ${t.reward} 🪙</p></div></div><span>›</span></div>`;
+                }
+            }
+            if(count === 0) list.innerHTML = "<p>All caught up!</p>";
+        }
+
+        function renderSocialTasks() {
+            let list = document.getElementById('social-tasks-list'); list.innerHTML = ""; let count = 0;
+            for(let key in adminData.socials) {
+                if(!userData.completedSocials[key]) {
+                    count++; let s = adminData.socials[key];
+                    list.innerHTML += `
+                        <div class="list-item" id="social-wrap-${key}" style="display:block;">
+                            <h4 style="margin-bottom:5px;">${s.title} <span style="font-size:12px; font-weight:normal; color:gray;">(${s.category})</span></h4>
+                            <p style="font-size:12px; color:var(--primary); font-weight:bold;">Reward: ${s.reward} 🪙</p>
+                            <button id="btn-soc-unlock-${key}" class="big-action-btn" style="padding:8px; font-size:14px; margin-top:10px;" onclick="unlockSocialTask('${key}', '${s.link}')">Start (Adgate)</button>
+                            <div id="soc-claim-wrap-${key}" style="display:none; margin-top:10px;">
+                                <a href="${s.link}" target="_blank" style="color:var(--primary); text-decoration:underline; font-size:13px; display:block; margin-bottom:10px;">Click here to complete task</a>
+                                <button class="big-action-btn" style="padding:8px; font-size:14px; margin-top:0; background:#10b981;" onclick="claimSocialTask('${key}', ${s.reward})">Claim Reward (Adgate)</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            if(count === 0) list.innerHTML = "<p>No social tasks right now.</p>";
+        }
+
+        // OTHER LISTENERS
+        onValue(ref(db, `adminSettings/socials`), (s) => { let u = document.getElementById('social-links-drawer'); u.innerHTML=""; if(s.exists()) s.forEach(c => { u.innerHTML += `<li><a href="${c.val().url}" target="_blank" style="text-decoration:none; color:inherit; display:flex; width:100%;"><div class="feat-icon" style="background:#333;">🔗</div> ${c.val().name}</a></li>`; }); });
+        onValue(ref(db, `users/${deviceUID}/withdrawals`), (snapshot) => {
+            let list = document.getElementById('withdrawal-history-list'); list.innerHTML = "";
+            if(!snapshot.exists()) return list.innerHTML = "<p style='font-size:12px;color:gray;'>No requests yet.</p>";
+            snapshot.forEach(child => {
+                let w = child.val();
+                let statClass = w.status === 'Pending' ? 'st-pending' : (w.status === 'Approved' ? 'st-success' : 'st-rejected');
+                list.innerHTML += `<div class="list-item"><div style="flex-grow:1;"><h4 style="margin-bottom:3px;">${w.method} - ${w.amount} 🪙</h4><p style="font-size:11px; color:gray;">${new Date(w.time).toLocaleDateString()}</p></div><span class="status-badge ${statClass}">${w.status}</span></div>`;
+            });
+        });
+
+        // SECURE ANTI-GLITCH COIN ADDING (Predicts Immediately + Saves)
+        window.addCoins = function(amt) {
+            userData.coins += amt;
+            set(balanceRef, userData.coins);
+            window.showToast(`Earned ${amt} Coins!`);
+        }
+
+        // UI HELPERS
+        function updateUIBalance() { let fiat = (userData.coins * COIN_RATE).toFixed(4); document.getElementById('home-coins').innerText = userData.coins.toLocaleString(); document.getElementById('home-fiat').innerText = "$" + fiat; document.getElementById('drawer-coins').innerText = userData.coins.toLocaleString(); document.getElementById('drawer-fiat').innerText = "$" + fiat; }
+        window.showToast = function(msg) { let t = document.getElementById('toast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+        window.toggleDrawer = function() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('drawer-overlay').classList.toggle('active'); }
+        window.navigate = function(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); let b = document.getElementById('btn-back'), m = document.getElementById('btn-menu'); if(id === 'dashboard') { b.style.display = 'none'; m.style.display = 'inline-block'; document.getElementById('header-text').innerText = "Home"; document.getElementById('global-ad-footer').style.display='none';} else { b.style.display = 'inline-block'; m.style.display = 'none'; document.getElementById('global-ad-footer').style.display='block';} }
+        window.openTask = function(taskId, title) { window.navigate(taskId); document.getElementById('drawer').classList.remove('open'); document.getElementById('drawer-overlay').classList.remove('active'); document.getElementById('header-text').innerText = title; }
+
+        // ADGATE OVERLAY FIX (Removed Sandbox for Ad network loading)
+        let adgateCallback = null;
+        window.triggerAdgate = async function(callback) {
+            try { if(typeof show_10996204 !== 'undefined') await show_10996204(); } catch(e){}
+            let durations = [15, 30, 45, 60]; let duration = durations[Math.floor(Math.random() * durations.length)];
+            adgateCallback = callback;
+            document.getElementById('adgate-modal').classList.add('active'); document.getElementById('adgate-close').style.display = 'none';
+            document.getElementById('adgate-timer').innerText = `View Ad for: ${duration}s`;
+            document.getElementById('adgate-iframe').src = globalDirectLink;
+            let intv = setInterval(() => { duration--; document.getElementById('adgate-timer').innerText = `View Ad for: ${duration}s`; if(duration <= 0) { clearInterval(intv); document.getElementById('adgate-timer').innerText = "Complete!"; document.getElementById('adgate-close').style.display = 'block'; } }, 1000);
+        }
+        window.closeAdgate = function() { document.getElementById('adgate-modal').classList.remove('active'); document.getElementById('adgate-iframe').src = ""; if (adgateCallback) { adgateCallback(); adgateCallback = null; } }
+        async function triggerPopup() { try { if(typeof show_10996204 !== 'undefined') await show_10996204('pop'); } catch(e){} }
+
+        // SOCIAL & CUSTOM TASKS (Double Adgate)
+        window.unlockSocialTask = function(id, link) {
+            window.triggerAdgate(() => {
+                document.getElementById(`btn-soc-unlock-${id}`).style.display = 'none';
+                document.getElementById(`soc-claim-wrap-${id}`).style.display = 'block';
+                window.open(link, '_blank'); 
+            });
+        }
+        window.claimSocialTask = function(id, reward) {
+            triggerPopup();
+            window.triggerAdgate(() => {
+                window.addCoins(reward);
+                update(ref(db, `users/${deviceUID}/completedSocials`), { [id]: true });
+            });
+        }
+        let activeCustomTask = null;
+        window.viewCustomTask = function(encoded) {
+            activeCustomTask = JSON.parse(decodeURIComponent(encoded));
+            document.getElementById('ct-title').innerText = activeCustomTask.title; document.getElementById('ct-desc').innerText = activeCustomTask.desc; document.getElementById('ct-reward').innerText = activeCustomTask.reward; document.getElementById('ct-link').href = activeCustomTask.link;
+            document.getElementById('task-locked').style.display = 'block'; document.getElementById('task-unlocked').style.display = 'none';
+            window.openTask('custom-task-action', 'Task Details');
+        }
+        window.unlockCustomTask = function() { window.triggerAdgate(() => { document.getElementById('task-locked').style.display = 'none'; document.getElementById('task-unlocked').style.display = 'block'; }); }
+        
+        // FIXED CUSTOM TASK PROOF LOGIC (Local Lock)
+        window.submitCustomTaskProof = function() {
+            let em = document.getElementById('ct-email').value, un = document.getElementById('ct-username').value, ss = document.getElementById('ct-screenshot').value;
+            if(!em || !un || !ss) return window.showToast("Fill all details!");
+            triggerPopup();
+            window.triggerAdgate(() => {
+                let d = { taskId: activeCustomTask.id, taskTitle: activeCustomTask.title, reward: activeCustomTask.reward, email: em, username: un, proofLink: ss, status: 'Pending', time: Date.now() };
+                push(ref(db, `users/${deviceUID}/reviews`), d);
+                push(ref(db, `admin/pendingReviews`), {...d, userId: deviceUID});
+                
+                window.localCompletedCustoms[activeCustomTask.id] = true; // HARD LOCK
+                renderCustomTasks(); // Instantly hide
+                
+                window.showToast("Proof Sent! Awaiting Admin.");
+                document.getElementById('ct-email').value = ""; document.getElementById('ct-username').value = ""; document.getElementById('ct-screenshot').value = "";
+                window.openTask('task-reviews', 'My Reviews');
+            });
+        }
+
+        // WATCH ADS & VIDEO LOGIC (PERFECT SYNC)
+        window.doWatchAd = function(id, r) { window.triggerAdgate(() => { window.addCoins(r); update(ref(db, `users/${deviceUID}/completedAds`), { [id]: true }); }); }
+        window.doWatchVideo = function(id, r, title) {
+            window.triggerAdgate(() => {
+                document.getElementById('watch-video-list').style.display = 'none'; document.getElementById('video-player-container').style.display = 'block'; document.getElementById('vp-title').innerText = title;
+                let t = 15; let intv = setInterval(()=>{ t--; document.getElementById('vid-timer').innerText = t; if(t<=0){ clearInterval(intv); let b = document.getElementById('btn-vid-claim'); b.disabled=false; b.innerText="Claim Reward"; b.onclick = () => window.triggerAdgate(()=>{ window.addCoins(r); update(ref(db, `users/${deviceUID}/completedVids`), { [id]: true }); document.getElementById('watch-video-list').style.display = 'block'; document.getElementById('video-player-container').style.display = 'none'; }); } },1000);
+            });
+        }
+
+        // PRESERVED TASKS (Continuous Spin fixed)
+        let currentSpin = 0;
+        window.playSpin = function() {
+            if(userData.limits.spin <= 0) return window.showToast("Daily limit reached!");
+            document.getElementById('btn-spin').disabled = true;
+            currentSpin += Math.floor(Math.random() * 360) + 1440; document.getElementById('wheel-icon').style.transform = `rotate(${currentSpin}deg)`;
+            setTimeout(() => { triggerPopup(); window.triggerAdgate(() => { window.addCoins(5); userData.limits.spin--; set(limitsRef, userData.limits); document.getElementById('btn-spin').disabled = false; }); }, 3000);
+        }
+        window.playSlot = function() {
+            if(userData.limits.slot <= 0) return window.showToast("Daily limit reached!");
+            if(userData.coins < 2) return window.showToast("Need 2 Coins!"); 
+            userData.coins -= 2; set(balanceRef, userData.coins);
+            document.getElementById('btn-slot').disabled = true;
+            setTimeout(() => { triggerPopup(); window.triggerAdgate(() => { window.addCoins(15); userData.limits.slot--; set(limitsRef, userData.limits); document.getElementById('btn-slot').disabled = false; }); }, 1000);
+        }
+        let scratched = false;
+        window.playScratch = function() {
+            if(userData.limits.scratch <= 0) return window.showToast("Daily limit reached!");
+            if(scratched) return; scratched = true; document.getElementById('scratch-area').classList.add('scratched'); document.getElementById('scratch-area').innerText = "Won 5 🪙";
+            setTimeout(() => { triggerPopup(); window.triggerAdgate(() => { window.addCoins(5); userData.limits.scratch--; set(limitsRef, userData.limits); scratched=false; document.getElementById('scratch-area').classList.remove('scratched'); document.getElementById('scratch-area').innerText = "SCRATCH ME";}); }, 1000);
+        }
+        window.playCaptcha = function() {
+            if(userData.limits.captcha <= 0) return window.showToast("Daily limit reached!");
+            window.triggerAdgate(() => { window.addCoins(5); userData.limits.captcha--; set(limitsRef, userData.limits); document.getElementById('captcha-input').value=""; });
+        }
+
+        // SECURE WITHDRAWAL
+        window.processWithdraw = function(e) {
+            e.preventDefault();
+            let amt = parseInt(document.getElementById('w-amt').value); let method = document.getElementById('w-method').value; let details = document.getElementById('w-details').value;
+            if(amt < adminMinWithdraw) return window.showToast(`Min withdraw is ${adminMinWithdraw}`);
+            if(amt > userData.coins) return window.showToast("Insufficient Balance");
+            
+            userData.coins -= amt; set(balanceRef, userData.coins);
+            push(ref(db, `users/${deviceUID}/withdrawals`), { amount: amt, method: method, details: details, status: 'Pending', time: Date.now() });
+            document.getElementById('withdraw-form').reset(); window.showToast("Request Sent!");
+        }
+    </script>
+</body>
+</html>
